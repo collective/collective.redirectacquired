@@ -1,0 +1,16 @@
+*.egg-info
+*.mo
+*.pyc
+*~
+.*
+bin/
+lib/
+include/
+develop-eggs/
+dist/
+eggs/
+parts/
+src/
+var/
+!.gitignore
+pip-selfcheck.json

@@ -1,0 +1,28 @@
+<configure xmlns="http://namespaces.zope.org/zope">
+
+  <include package="Products.CMFPlone"/>
+
+  <adapter
+      provides="zope.publisher.interfaces.IPublishTraverse"
+      for="zope.interface.Interface
+           zope.publisher.interfaces.browser.IBrowserRequest"
+      factory=".traverse.LogAcquiredPublishTraverse"
+      />
+
+  <class class="Products.Archetypes.atapi.BaseObject">
+      <implements interface=".interfaces.IBaseObject" />
+  </class>
+
+  <interface
+      interface=".interfaces.IPublishableThroughAcquisition" />
+
+  <adapter
+      provides="zope.publisher.interfaces.IPublishTraverse"
+      for=".traverse.IBaseObject
+           zope.publisher.interfaces.browser.IBrowserRequest"
+      factory=".traverse.LogAcquiredImageTraverser"
+      />
+
+  <subscriber handler=".traverse.redirect_acquired_content"/>
+
+</configure>
