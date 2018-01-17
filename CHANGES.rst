@@ -2,7 +2,7 @@ Changelog
 =========
 
 
-1.0a1 (unreleased)
+1.0a1 (2018-01-17)
 ------------------
 
 - Remove useless inclusion of CMFPlone in configure.zcml
