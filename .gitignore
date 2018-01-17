@@ -14,3 +14,4 @@ src/
 var/
 !.gitignore
 pip-selfcheck.json
+.DS_Store
