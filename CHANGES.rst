@@ -5,7 +5,8 @@ Changelog
 1.0a1 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Remove useless inclusion of CMFPlone in configure.zcml
+  [gotcha]
 
 
 1.0a0 (2018-01-17)
