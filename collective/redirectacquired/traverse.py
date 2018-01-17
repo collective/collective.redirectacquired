@@ -1,4 +1,5 @@
 import logging
+from App.config import getConfiguration
 from Acquisition import aq_base
 from ZPublisher.interfaces import IPubAfterTraversal
 from ZPublisher.BaseRequest import DefaultPublishTraverse
@@ -95,5 +96,20 @@ def redirect_acquired_content(event):
     if canonical_url is not None:
         actual_url = request.get('ACTUAL_URL')
         logger.info("redirect from '%s' to CANONICAL_URL '%s'", request.get('ACTUAL_URL'), canonical_url)
-        request.RESPONSE.redirect(canonical_url)
+        redirect = getRedirectFromConfiguration()
+        if redirect:
+            request.RESPONSE.redirect(canonical_url)
 
+
+def getRedirectFromConfiguration():
+    config = getConfiguration()
+    if not hasattr(config, 'product_config'):
+        return
+    product_config = config.product_config
+    if config is None:
+        return
+    configuration = product_config.get('collective.redirectacquired', None)
+    if configuration is not None:
+        return configuration.get('redirect', 'False') == 'True'
+    else:
+        return False
