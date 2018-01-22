@@ -16,11 +16,9 @@
 
   <adapter
       provides="zope.publisher.interfaces.IPublishTraverse"
-      for=".traverse.IBaseObject
+      for=".interfaces.IBaseObject
            zope.publisher.interfaces.browser.IBrowserRequest"
       factory=".traverse.LogAcquiredImageTraverser"
       />
-
-  <subscriber handler=".traverse.redirect_acquired_content"/>
 
 </configure>

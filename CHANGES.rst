@@ -5,7 +5,11 @@ Changelog
 1.0a2 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- More tests
+  [gotcha]
+
+- Much simpler implementation
+  [gotcha]
 
 
 1.0a1 (2018-01-17)
