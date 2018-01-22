@@ -14,6 +14,7 @@ from .interfaces import IBaseObject
 
 logger = logging.getLogger('redirect.acquired')
 CANONICAL_URL = 'CANONICAL_URL'
+CANONICAL_TRAVERSAL_NAMESTACK = 'CANONICAL_TRAVERSAL_NAMESTACK'
 
 
 def log_if_suspect_acquisition(context, request, name, result):
@@ -27,6 +28,7 @@ def log_if_suspect_acquisition(context, request, name, result):
         if ((result_id not in context.objectIds())
                 or (aq_base(result) is not aq_base(context[result_id]))):
             request.set(CANONICAL_URL, result.absolute_url())
+            request.set(CANONICAL_TRAVERSAL_NAMESTACK, list(request['TraversalRequestNameStack']))
             logger.warn(
                 "when traversing '%s', '%s' (%s) is acquired from "
                 "'%s' (%s), referred from %s",
@@ -42,16 +44,38 @@ def log_if_suspect_acquisition(context, request, name, result):
 def compute_canonical_url(context, request, name):
     canonical_url = request.get(CANONICAL_URL, None)
     if canonical_url is not None:
-        if isDefaultPage(context, name) or isDefaultView(context, name):
-            return
-        name = checkAlias(context, request, name)
-        if name is not None:
-	    canonical_url = '/'.join([canonical_url, name])
-	    request.set(CANONICAL_URL, canonical_url)
+        if len(request[CANONICAL_TRAVERSAL_NAMESTACK]) == len(request['TraversalRequestNameStack']) + 1:
+            request[CANONICAL_TRAVERSAL_NAMESTACK].pop()
+            if isDefaultPage(context, name) or isLayout(context, name):
+                return
+            name = checkAlias(context, request, name)
+            if isFTIDefaultView(context, name):
+                return
+            if name is not None:
+                canonical_url = '/'.join([canonical_url, name])
+                request.set(CANONICAL_URL, canonical_url)
+        else:
+            fix_when_directly_provided(request)
 
 
-def isDefaultView(context, name):
+def fix_when_directly_provided(request):
+    canonical_url = request.get(CANONICAL_URL, None)
+    if canonical_url is not None:
+        published_count = len(request[CANONICAL_TRAVERSAL_NAMESTACK]) - len(request['TraversalRequestNameStack'])
+        names = request[CANONICAL_TRAVERSAL_NAMESTACK][:published_count]
+        names.append(canonical_url)
+        names.reverse()
+        canonical_url = '/'.join(names)
+        request.set(CANONICAL_URL, canonical_url)
+
+
+def isLayout(context, name):
     return name == context.getProperty('layout', None)
+
+
+def isFTIDefaultView(context, name):
+    FTI = context.getTypeInfo()
+    return FTI.getProperty('default_view', None) == name
 
 
 def isDefaultPage(context, name):
@@ -59,7 +83,7 @@ def isDefaultPage(context, name):
 
 
 def checkAlias(context, request, name):
-    if name not in request.get('ACTUAL_URL'):
+    if name != request.get('ACTUAL_URL').split('/')[-1]:
         type_info = context.getTypeInfo()
         aliases = type_info.getMethodAliases()
 	for key in aliases:
@@ -67,6 +91,9 @@ def checkAlias(context, request, name):
 		if key == "(Default)":
                     return None
                 else:
+                    return key
+            elif type_info.queryMethodID(key) == '(selected layout)':
+                if key == request.get('ACTUAL_URL').split('/')[-1] and isFTIDefaultView(context, name):
                     return key
     return name
 
@@ -94,6 +121,7 @@ def redirect_acquired_content(event):
     request = event.request
     canonical_url = request.get(CANONICAL_URL, None)
     if canonical_url is not None:
+        fix_when_directly_provided(request)
         actual_url = request.get('ACTUAL_URL')
         logger.info("redirect from '%s' to CANONICAL_URL '%s'", request.get('ACTUAL_URL'), canonical_url)
         if DO_REDIRECT:
