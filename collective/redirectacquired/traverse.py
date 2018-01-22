@@ -96,8 +96,7 @@ def redirect_acquired_content(event):
     if canonical_url is not None:
         actual_url = request.get('ACTUAL_URL')
         logger.info("redirect from '%s' to CANONICAL_URL '%s'", request.get('ACTUAL_URL'), canonical_url)
-        redirect = getRedirectFromConfiguration()
-        if redirect:
+        if DO_REDIRECT:
             request.RESPONSE.redirect(canonical_url)
 
 
@@ -113,3 +112,5 @@ def getRedirectFromConfiguration():
         return configuration.get('redirect', 'False') == 'True'
     else:
         return False
+
+DO_REDIRECT = getRedirectFromConfiguration()
