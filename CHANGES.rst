@@ -2,7 +2,7 @@ Changelog
 =========
 
 
-1.0a7 (unreleased)
+1.0a7 (2018-01-24)
 ------------------
 
 - Take care of QUERY_STRING.
