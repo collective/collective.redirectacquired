@@ -1,7 +1,9 @@
 import unittest
 import pkg_resources
 from zExceptions import Redirect
+from zope.interface import alsoProvides
 from collective.redirectacquired.testing import BASE_INTEGRATION_TESTING
+from collective.redirectacquired.interfaces import IPublishableThroughAcquisition
 
 
 class TestBadAcquisition(unittest.TestCase):
@@ -26,6 +28,19 @@ class TestBadAcquisition(unittest.TestCase):
         self.assertTrue('a_folder' in self.portal.objectIds())
         request = self.layer['request']
         request.traverse('/plone/a_page')
+
+    def test_allow_acquired_content(self):
+        self.portal.invokeFactory('Document', 'a_page')
+        self.assertTrue('a_page' in self.portal.objectIds())
+        alsoProvides(self.portal['a_page'], IPublishableThroughAcquisition)
+        self.portal.invokeFactory('Folder', 'a_folder')
+        self.assertTrue('a_folder' in self.portal.objectIds())
+        request = self.layer['request']
+        request.traverse('/plone/a_folder/a_page')
+        self.assertRedirectWhenTraverse(
+            '/plone/a_page/a_folder',
+            '/plone/a_folder'
+        )
 
     def test_content_acquired(self):
         self.portal.invokeFactory('Document', 'a_page')
