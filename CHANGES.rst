@@ -2,7 +2,7 @@ Changelog
 =========
 
 
-1.0a6 (unreleased)
+1.0a6 (2018-01-24)
 ------------------
 
 - Fix and test when logging only.
