@@ -5,8 +5,8 @@ This Plone addon aims to solve the very common issue of having a lot of differen
 
 Zope implicit acquisition leads to many use case where URLs that are valid for the publisher are produced but are not the URLs meant by the users of the system.  
 
-While publishing a URL, instead of traversing from a content item to another content item 
-via  acquisition, redirect to the URL of the traversed content item.
+This addon modifies the publication process to ensure that instead of allowing traversal from a content item to another content item 
+via  acquisition, we redirect to the URL of the traversed content item.
 
 In the previous paragraph, an item is considered a content item if and only if it provides ``Products.CMFCore.IContentish``.
 
