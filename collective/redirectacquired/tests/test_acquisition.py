@@ -27,10 +27,20 @@ class TestBadAcquisition(unittest.TestCase):
     def test_no_content_acquired(self):
         self.portal.invokeFactory('Document', 'a_page')
         self.assertTrue('a_page' in self.portal.objectIds())
-        self.portal.invokeFactory('Folder', 'a_folder')
-        self.assertTrue('a_folder' in self.portal.objectIds())
         request = self.layer['request']
+        request.set('MIGHT_REDIRECT', True)
         request.traverse('/plone/a_page')
+
+    def test_not_icontentish__acquired(self):
+        from OFS.Image import manage_addFile
+        manage_addFile(self.portal, id='a_file')
+        self.assertTrue('a_file' in self.portal.objectIds())
+        self.portal.invokeFactory('Document', 'a_page')
+        self.assertTrue('a_page' in self.portal.objectIds())
+        request = self.layer['request']
+        request.set('MIGHT_REDIRECT', True)
+        request.traverse('/plone/a_file/a_page')
+        request.traverse('/plone/a_page/a_file')
 
     def test_allow_acquired_content(self):
         self.portal.invokeFactory('Document', 'a_page')
@@ -39,6 +49,7 @@ class TestBadAcquisition(unittest.TestCase):
         self.portal.invokeFactory('Folder', 'a_folder')
         self.assertTrue('a_folder' in self.portal.objectIds())
         request = self.layer['request']
+        request.set('MIGHT_REDIRECT', True)
         request.traverse('/plone/a_folder/a_page')
         self.assertRedirectWhenTraverse(
             '/plone/a_page/a_folder',
@@ -77,6 +88,7 @@ class TestBadAcquisition(unittest.TestCase):
         self.portal.invokeFactory('Folder', 'a_folder')
         self.assertTrue('a_folder' in self.portal.objectIds())
         request = self.layer['request']
+        request.set('MIGHT_REDIRECT', True)
         request.traverse('/plone/a_page/resolveuid/' + uid)
         self.assertRedirectWhenTraverse(
             '/plone/a_folder/a_page/resolveuid/' + uid,
