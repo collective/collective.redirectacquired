@@ -63,6 +63,15 @@ class TestBadAcquisition(unittest.TestCase):
         self.assertTrue('a_folder' in self.portal.objectIds())
         self.assertRedirectWhenTraverse('/plone/a_folder/a_page', '/plone/a_page')
 
+    def test_content_acquired_log_but_no_redirect(self):
+        self.portal.invokeFactory('Document', 'a_page')
+        self.assertTrue('a_page' in self.portal.objectIds())
+        self.portal.invokeFactory('Folder', 'a_folder')
+        self.assertTrue('a_folder' in self.portal.objectIds())
+        request = self.layer['request']
+        request.set('MIGHT_REDIRECT', False)
+        request.traverse('/plone/a_folder/a_page')
+
     def test_content_multi_acquired(self):
         self.portal.invokeFactory('Document', 'a_page')
         self.assertTrue('a_page' in self.portal.objectIds())

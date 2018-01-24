@@ -45,7 +45,7 @@ def might_redirect(request):
 
 
 def get_canonical_url(request, base_url):
-    names = request['TraversalRequestNameStack']
+    names = list(request['TraversalRequestNameStack'])
     names.append(base_url)
     names.reverse()
     return '/'.join(names)
