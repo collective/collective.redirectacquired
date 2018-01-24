@@ -5,7 +5,8 @@ Changelog
 1.0a4 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Logging is back.
+  [gotcha]
 
 
 1.0a3 (2018-01-24)

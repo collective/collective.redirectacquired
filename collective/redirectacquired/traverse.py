@@ -19,7 +19,7 @@ def log_if_suspect_acquisition(context, request, name, result):
         result_id = result.getId()
         if ((result_id not in context.objectIds())
                 or (aq_base(result) is not aq_base(context[result_id]))):
-            logger.warn(
+            logger.info(
                 "when traversing '%s', '%s' (%s) is acquired from "
                 "'%s' (%s), referred from %s",
                 request.get('ACTUAL_URL'),
@@ -29,10 +29,10 @@ def log_if_suspect_acquisition(context, request, name, result):
                 '/'.join(context.getPhysicalPath()),
                 request.get('HTTP_REFERER', "none")
             )
-            if might_redirect(request):
                 canonical_url = get_canonical_url(request, result.absolute_url())
                 actual_url = request.get('ACTUAL_URL')
                 logger.info("redirect from '%s' to CANONICAL_URL '%s'", request.get('ACTUAL_URL'), canonical_url)
+            if might_redirect(request):
                 raise Redirect(canonical_url)
 
 
