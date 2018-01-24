@@ -2,7 +2,7 @@ Changelog
 =========
 
 
-1.0a3 (unreleased)
+1.0a3 (2018-01-24)
 ------------------
 
 - More tests and refactoring
