@@ -5,7 +5,8 @@ Changelog
 1.0a3 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- More tests and refactoring
+  [gotcha]
 
 
 1.0a2 (2018-01-22)
