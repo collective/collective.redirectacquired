@@ -29,9 +29,9 @@ def log_if_suspect_acquisition(context, request, name, result):
                 '/'.join(context.getPhysicalPath()),
                 request.get('HTTP_REFERER', "none")
             )
-                canonical_url = get_canonical_url(request, result.absolute_url())
-                actual_url = request.get('ACTUAL_URL')
-                logger.info("redirect from '%s' to CANONICAL_URL '%s'", request.get('ACTUAL_URL'), canonical_url)
+            canonical_url = get_canonical_url(request, result.absolute_url())
+            actual_url = request.get('ACTUAL_URL')
+            logger.info("redirect from '%s' to CANONICAL_URL '%s'", request.get('ACTUAL_URL'), canonical_url)
             if might_redirect(request):
                 raise Redirect(canonical_url)
 

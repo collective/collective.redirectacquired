@@ -5,7 +5,8 @@ Changelog
 1.0a5 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Fix rushed code.
+  [gotcha]
 
 
 1.0a4 (2018-01-24)
