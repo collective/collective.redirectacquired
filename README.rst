@@ -1,12 +1,12 @@
 collective.redirectacquired
 ===========================
 
-While traversing a URL, if we move from a content item to another content item 
-through acquisition, we redirect to the URL of the actual content.
+While publishing a URL, instead of traversing from a content item to another content item 
+via  acquisition, redirect to the URL of the traversed content item.
 
-An item is considered a content item if it provides ``Products.CMFCore.IContentish``.
+In the previous paragraph, an item is considered a content item if and only if it provides ``Products.CMFCore.IContentish``.
 
-This should avoid false positive redirects for URL path item that are actually part of the software rather than content.
+This should avoid false positive redirects for URL path item that are actually part of the software rather than content items.
 
-If there are some content items that should be publishable trhough acquisition, mark them with
+If you need to enable publication of content items via acquisition, mark them with
 ``collective.redirectacquired.interfaces.IPublishableThroughAcquisition``.
