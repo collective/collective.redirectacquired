@@ -226,3 +226,7 @@ class TestFunctional(unittest.TestCase):
         url = self.app.absolute_url() + '/VirtualHostBase/http/www.buystuff.com:80/plone/a_folder/a_page?MIGHT_REDIRECT=1'
         browser.open(url)
         self.assertNotEqual(url, browser.url)
+        browser.handleErrors = False
+        url = self.app.absolute_url() + '/VirtualHostBase/http/www.buystuff.com:80/plone/VirtualHostRoot/_vh_z/a_page?MIGHT_REDIRECT=1'
+        browser.open(url)
+        self.assertEqual(url, browser.url)
