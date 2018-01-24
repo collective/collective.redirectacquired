@@ -5,8 +5,11 @@ Changelog
 1.0a7 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Take care of QUERY_STRING.
+  [gotcha]
 
+- Do not redirect if REQUEST_METHOD is not GET.
+  [gotcha]
 
 1.0a6 (2018-01-24)
 ------------------

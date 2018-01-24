@@ -16,13 +16,22 @@ class TestBadAcquisition(unittest.TestCase):
     def setUp(self):
         self.portal = self.layer['portal']
 
-    def assertRedirectWhenTraverse(self, traverse_to, redirect_to):
+    def assertRedirectWhenTraverse(self, traverse_to, redirect_to, **kw):
         request = self.layer['request']
         base_url = request['SERVER_URL']
         request.set('MIGHT_REDIRECT', True)
+        for key, value in kw.items():
+            request.set(key, value)
         with self.assertRaises(Redirect) as cm:
             request.traverse(traverse_to)
         self.assertEquals(cm.exception.message, base_url + redirect_to)
+
+    def test_content_acquired(self):
+        self.portal.invokeFactory('Document', 'a_page')
+        self.assertTrue('a_page' in self.portal.objectIds())
+        self.portal.invokeFactory('Folder', 'a_folder')
+        self.assertTrue('a_folder' in self.portal.objectIds())
+        self.assertRedirectWhenTraverse('/plone/a_folder/a_page', '/plone/a_page')
 
     def test_no_content_acquired(self):
         self.portal.invokeFactory('Document', 'a_page')
@@ -30,6 +39,27 @@ class TestBadAcquisition(unittest.TestCase):
         request = self.layer['request']
         request.set('MIGHT_REDIRECT', True)
         request.traverse('/plone/a_page')
+
+    def test_content_acquired_with_query_string(self):
+        self.portal.invokeFactory('Document', 'a_page')
+        self.assertTrue('a_page' in self.portal.objectIds())
+        self.portal.invokeFactory('Folder', 'a_folder')
+        self.assertTrue('a_folder' in self.portal.objectIds())
+        self.assertRedirectWhenTraverse(
+            '/plone/a_folder/a_page', 
+            '/plone/a_page?query_string=1',
+            QUERY_STRING="query_string=1"
+        )
+
+    def test_content_acquired_method_POST(self):
+        self.portal.invokeFactory('Document', 'a_page')
+        self.assertTrue('a_page' in self.portal.objectIds())
+        self.portal.invokeFactory('Folder', 'a_folder')
+        self.assertTrue('a_folder' in self.portal.objectIds())
+        request = self.layer['request']
+        request.set('MIGHT_REDIRECT', True)
+        request.set('REQUEST_METHOD', 'POST')
+        request.traverse('/plone/a_folder/a_page')
 
     def test_not_icontentish__acquired(self):
         from OFS.Image import manage_addFile
@@ -55,13 +85,6 @@ class TestBadAcquisition(unittest.TestCase):
             '/plone/a_page/a_folder',
             '/plone/a_folder'
         )
-
-    def test_content_acquired(self):
-        self.portal.invokeFactory('Document', 'a_page')
-        self.assertTrue('a_page' in self.portal.objectIds())
-        self.portal.invokeFactory('Folder', 'a_folder')
-        self.assertTrue('a_folder' in self.portal.objectIds())
-        self.assertRedirectWhenTraverse('/plone/a_folder/a_page', '/plone/a_page')
 
     def test_content_acquired_log_but_no_redirect(self):
         self.portal.invokeFactory('Document', 'a_page')
