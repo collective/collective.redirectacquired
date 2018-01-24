@@ -2,7 +2,10 @@ import unittest
 import pkg_resources
 from zExceptions import Redirect
 from zope.interface import alsoProvides
+from plone.testing.z2 import Browser
+from plone.app.testing import TEST_USER_NAME, TEST_USER_PASSWORD
 from collective.redirectacquired.testing import BASE_INTEGRATION_TESTING
+from collective.redirectacquired.testing import BASE_FUNCTIONAL_TESTING
 from collective.redirectacquired.interfaces import IPublishableThroughAcquisition
 
 
@@ -16,7 +19,7 @@ class TestBadAcquisition(unittest.TestCase):
     def assertRedirectWhenTraverse(self, traverse_to, redirect_to):
         request = self.layer['request']
         base_url = request['SERVER_URL']
-        request.set('DO_REDIRECT', True)
+        request.set('MIGHT_REDIRECT', True)
         with self.assertRaises(Redirect) as cm:
             request.traverse(traverse_to)
         self.assertEquals(cm.exception.message, base_url + redirect_to)
@@ -182,3 +185,32 @@ class TestBadAcquisition(unittest.TestCase):
         self.assertTrue('events' in self.portal.objectIds())
         self.portal['events'].manage_addProperty('layout', 'folder_listing', 'string')
         self.assertRedirectWhenTraverse('/plone/news/events', '/plone/events')
+
+
+class TestFunctional(unittest.TestCase):
+
+    layer = BASE_INTEGRATION_TESTING
+
+    def setUp(self):
+        self.portal = self.layer['portal']
+        self.app = self.layer['app']
+    
+    def test_virtual_hosting(self):
+        from Products.SiteAccess.VirtualHostMonster import manage_addVirtualHostMonster
+        from Products.SiteAccess.VirtualHostMonster import VirtualHostMonster
+	manage_addVirtualHostMonster(self.app)
+        self.assertTrue(VirtualHostMonster.id in self.app.objectIds())
+        self.portal.invokeFactory('Document', 'a_page')
+        self.assertTrue('a_page' in self.portal.objectIds())
+        self.portal.invokeFactory('Folder', 'a_folder')
+        self.assertTrue('a_folder' in self.portal.objectIds())
+        import transaction
+        transaction.commit()
+        browser = Browser(self.app)
+        browser.addHeader('Authorization', 'Basic %s:%s' % (TEST_USER_NAME, TEST_USER_PASSWORD,))
+        url = self.app.absolute_url() + '/VirtualHostBase/http/www.buystuff.com:80/plone/a_page?MIGHT_REDIRECT=1'
+        browser.open(url)
+        self.assertEqual(url, browser.url)
+        url = self.app.absolute_url() + '/VirtualHostBase/http/www.buystuff.com:80/plone/a_folder/a_page?MIGHT_REDIRECT=1'
+        browser.open(url)
+        self.assertNotEqual(url, browser.url)

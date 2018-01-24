@@ -13,11 +13,9 @@ logger = logging.getLogger('redirect.acquired')
 
 
 def log_if_suspect_acquisition(context, request, name, result):
-    # do not log when acquired by VirtualHostMonster
-    # because of _vh_
-    if context.getId() == 'virtual_hosting':
-	return
-    if IContentish.providedBy(result) and not IPublishableThroughAcquisition.providedBy(result):
+    if not IContentish.providedBy(result) or not IContentish.providedBy(context):
+        return
+    if not IPublishableThroughAcquisition.providedBy(result):
         result_id = result.getId()
         if ((result_id not in context.objectIds())
                 or (aq_base(result) is not aq_base(context[result_id]))):
@@ -31,11 +29,19 @@ def log_if_suspect_acquisition(context, request, name, result):
                 '/'.join(context.getPhysicalPath()),
                 request.get('HTTP_REFERER', "none")
             )
-            if DO_REDIRECT or request.get('DO_REDIRECT', False):
+            if might_redirect(request):
                 canonical_url = get_canonical_url(request, result.absolute_url())
                 actual_url = request.get('ACTUAL_URL')
                 logger.info("redirect from '%s' to CANONICAL_URL '%s'", request.get('ACTUAL_URL'), canonical_url)
                 raise Redirect(canonical_url)
+
+
+def might_redirect(request):
+    return (
+       MIGHT_REDIRECT 
+       or request.get('MIGHT_REDIRECT', False)
+       or request.form.get('MIGHT_REDIRECT', False)
+    )
 
 
 def get_canonical_url(request, base_url):
@@ -64,14 +70,14 @@ class LogAcquiredImageTraverser(ImageTraverser):
 def getRedirectFromConfiguration():
     config = getConfiguration()
     if not hasattr(config, 'product_config'):
-        return
+        return False
     product_config = config.product_config
     if config is None:
-        return
+        return False
     configuration = product_config.get('collective.redirectacquired', None)
     if configuration is not None:
         return configuration.get('redirect', 'False') == 'True'
     else:
         return False
 
-DO_REDIRECT = getRedirectFromConfiguration()
+MIGHT_REDIRECT = getRedirectFromConfiguration()
