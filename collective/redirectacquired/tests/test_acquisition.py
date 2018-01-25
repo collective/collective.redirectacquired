@@ -1,4 +1,5 @@
 import unittest
+import urllib2
 import pkg_resources
 from zExceptions import Redirect
 from zope.interface import alsoProvides
@@ -233,12 +234,27 @@ class TestBadAcquisition(unittest.TestCase):
 
 class TestFunctional(unittest.TestCase):
 
-    layer = BASE_INTEGRATION_TESTING
+    layer = BASE_FUNCTIONAL_TESTING
 
     def setUp(self):
         self.portal = self.layer['portal']
         self.app = self.layer['app']
     
+    def test_moved_permanently(self):
+        self.portal.invokeFactory('Document', 'a_page')
+        self.assertTrue('a_page' in self.portal.objectIds())
+        self.portal.invokeFactory('Folder', 'a_folder')
+        self.assertTrue('a_folder' in self.portal.objectIds())
+        import transaction
+        transaction.commit()
+        browser = Browser(self.app)
+        browser.addHeader('Authorization', 'Basic %s:%s' % (TEST_USER_NAME, TEST_USER_PASSWORD,))
+        url = self.app.absolute_url() + '/plone/a_folder/a_page?MIGHT_REDIRECT=1'
+        browser.mech_browser.set_handle_redirect(False)
+        with self.assertRaises(urllib2.HTTPError) as cm:
+            browser.open(url)
+        self.assertEqual(cm.exception.code, 301)
+
     def test_virtual_hosting(self):
         from Products.SiteAccess.VirtualHostMonster import manage_addVirtualHostMonster
         from Products.SiteAccess.VirtualHostMonster import VirtualHostMonster

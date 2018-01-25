@@ -44,7 +44,11 @@ def log_if_suspect_acquisition(context, request, name, result):
                 actual_url = actual_url + '?' + query_string
             logger.info("redirect from '%s' to CANONICAL_URL '%s'", actual_url, canonical_url)
             if might_redirect(request):
-                raise Redirect(canonical_url)
+                raise MovedPermanently(canonical_url)
+
+
+class MovedPermanently(Redirect):
+    pass
 
 
 def might_redirect(request):

@@ -5,7 +5,8 @@ Changelog
 1.0a8 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Redirect permanently (301)
+  [gotcha]
 
 
 1.0a7 (2018-01-24)
