@@ -7,6 +7,7 @@ from zExceptions import Redirect
 from Products.CMFCore.interfaces import IContentish
 from plone.app.imaging.traverse import ImageTraverser
 from plone.app.caching.operations.utils import doNotCache
+from plone.app.redirector.browser import FourOhFourView
 
 from .interfaces import IPublishableThroughAcquisition
 
@@ -43,11 +44,15 @@ def log_if_suspect_acquisition(context, request, name, result):
             actual_url = request.get('ACTUAL_URL')
             if query_string:
                 actual_url = actual_url + '?' + query_string
-            logger.info("redirect from '%s' to CANONICAL_URL '%s'", actual_url, canonical_url)
-            if might_redirect(request):
-                dummy = None
-                doNotCache(dummy, request, request.response)
-                raise MovedPermanently(canonical_url)
+            redirector = FourOhFourView(result, request)
+            if redirector.attempt_redirect():
+                raise MovedPermanently(request.response.headers['Location'])
+            else:
+                logger.info("redirect from '%s' to CANONICAL_URL '%s'", actual_url, canonical_url)
+                if might_redirect(request):
+                    dummy = None
+                    doNotCache(dummy, request, request.response)
+                    raise MovedPermanently(canonical_url)
 
 
 class MovedPermanently(Redirect):
