@@ -25,6 +25,9 @@ class TestBadAcquisition(unittest.TestCase):
             request.set(key, value)
         with self.assertRaises(Redirect) as cm:
             request.traverse(traverse_to)
+        self.assertTrue('expires' in request.response.headers)
+        self.assertTrue('cache-control' in request.response.headers)
+        self.assertTrue(request.response.headers['cache-control'].startswith('max-age=0'))
         self.assertEquals(cm.exception.message, base_url + redirect_to)
 
     def test_content_acquired(self):
