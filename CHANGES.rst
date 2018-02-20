@@ -2,7 +2,7 @@ Changelog
 =========
 
 
-1.0a9 (unreleased)
+1.0a9 (2018-02-20)
 ------------------
 
 - Refactor for more complex acquisition
