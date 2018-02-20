@@ -5,7 +5,17 @@ Changelog
 1.0a9 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Refactor for more complex acquisition
+  https://github.com/collective/collective.redirectacquired/issues/3
+  [gotcha]
+
+- Do not break redirector
+  https://github.com/collective/collective.redirectacquired/issues/2
+  [gotcha]
+
+- Do not allow to cache permanent redirection
+  https://github.com/collective/collective.redirectacquired/issues/1
+  [gotcha]
 
 
 1.0a8 (2018-01-25)

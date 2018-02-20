@@ -1,13 +1,22 @@
 import unittest
 import urllib2
+import base64
 import pkg_resources
 from zExceptions import Redirect
 from zope.interface import alsoProvides
 from plone.testing.z2 import Browser
+from plone.app.testing import login
 from plone.app.testing import TEST_USER_NAME, TEST_USER_PASSWORD
+from plone.app.testing import TEST_USER_ID
+from ZPublisher.pubevents import PubAfterTraversal
+from collective.redirectacquired.traverse import redirect
 from collective.redirectacquired.testing import BASE_INTEGRATION_TESTING
 from collective.redirectacquired.testing import BASE_FUNCTIONAL_TESTING
 from collective.redirectacquired.interfaces import IPublishableThroughAcquisition
+
+
+def login_as_test_user(request):
+    request._auth = "basic " + base64.encodestring(TEST_USER_NAME + ":" + TEST_USER_PASSWORD)
 
 
 class TestBadAcquisition(unittest.TestCase):
@@ -25,6 +34,8 @@ class TestBadAcquisition(unittest.TestCase):
             request.set(key, value)
         with self.assertRaises(Redirect) as cm:
             request.traverse(traverse_to)
+            # simulate ZPublisher.Publish
+            redirect(PubAfterTraversal(request))
         self.assertTrue('expires' in request.response.headers)
         self.assertTrue('cache-control' in request.response.headers)
         self.assertTrue(request.response.headers['cache-control'].startswith('max-age=0'))
@@ -106,13 +117,14 @@ class TestBadAcquisition(unittest.TestCase):
         self.assertTrue('a_folder' in self.portal.objectIds())
         self.portal.invokeFactory('Folder', 'events')
         self.assertTrue('events' in self.portal.objectIds())
-        self.assertRedirectWhenTraverse('/plone/events/a_folder/a_page', '/plone/a_folder/a_page')
+        self.assertRedirectWhenTraverse('/plone/events/a_folder/a_page', '/plone/a_page')
 
     def test_content_acquired_and_view(self):
         self.portal.invokeFactory('Document', 'a_page')
         self.assertTrue('a_page' in self.portal.objectIds())
         self.portal.invokeFactory('Folder', 'a_folder')
         self.assertTrue('a_folder' in self.portal.objectIds())
+        login_as_test_user(self.layer['request'])
         self.assertRedirectWhenTraverse('/plone/a_folder/a_page/search', '/plone/a_page/search')
         self.assertRedirectWhenTraverse('/plone/a_folder/a_page/@@search',
                 '/plone/a_page/@@search')
