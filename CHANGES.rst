@@ -2,7 +2,7 @@ Changelog
 =========
 
 
-1.0a10 (unreleased)
+1.0a10 (2018-02-26)
 -------------------
 
 - Get rid of code made useless by refactoring.
