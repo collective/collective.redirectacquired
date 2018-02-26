@@ -270,6 +270,33 @@ class TestFunctional(unittest.TestCase):
             browser.open(url)
         self.assertEqual(cm.exception.code, 301)
 
+    def test_moved_redirector(self):
+        """
+        check that collective.redirect does not interfere with redirector
+        """
+        self.portal.invokeFactory('Folder', 'dir1')
+        self.assertTrue('dir1' in self.portal.objectIds())
+        folder = self.portal['dir1']
+        folder.invokeFactory('Folder', 'dir2')
+        self.assertTrue('dir2' in folder.objectIds())
+        subfolder = folder['dir2']
+        subfolder.invokeFactory('Document', 'page1')
+        self.assertTrue('page1' in subfolder.objectIds())
+        self.portal.invokeFactory('Folder', 'dir2')
+        self.assertTrue('dir2' in self.portal.objectIds())
+        import transaction
+        transaction.commit()
+        folder.manage_renameObjects(['dir2'], ['dir3'])
+        self.assertTrue('dir3' in folder.objectIds())
+        import transaction
+        transaction.commit()
+        browser = Browser(self.app)
+        browser.addHeader('Authorization', 'Basic %s:%s' % (TEST_USER_NAME, TEST_USER_PASSWORD,))
+        url = self.app.absolute_url() + '/plone/dir1/dir2/page1?MIGHT_REDIRECT=1'
+        browser.open(url)
+        redir_url = self.app.absolute_url() + '/plone/dir1/dir3/page1?MIGHT_REDIRECT=1'
+        self.assertEqual(browser.url, redir_url)
+
     def test_virtual_hosting(self):
         from Products.SiteAccess.VirtualHostMonster import manage_addVirtualHostMonster
         from Products.SiteAccess.VirtualHostMonster import VirtualHostMonster

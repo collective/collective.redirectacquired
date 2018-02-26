@@ -9,7 +9,6 @@ from zExceptions import Redirect
 from Products.CMFCore.interfaces import IContentish
 from plone.app.imaging.traverse import ImageTraverser
 from plone.app.caching.operations.utils import doNotCache
-from plone.app.redirector.browser import FourOhFourView
 
 from .interfaces import IPublishableThroughAcquisition
 
@@ -34,9 +33,6 @@ def check_traversal_to_acquired_content(context, request, name, result):
                 request.get('REQUEST_METHOD')
             )
             return
-        redirector = FourOhFourView(result, request)
-        if redirector.attempt_redirect():
-            raise MovedPermanently(request.response.headers['Location'])
         canonical_url = get_canonical_url(request, result.absolute_url())
         # store CANONICAL_URL in order to be able to redirect later in traversal
         request.set('CANONICAL_URL', canonical_url)
