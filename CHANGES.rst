@@ -5,7 +5,10 @@ Changelog
 1.0a10 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Get rid of code made useless by refactoring.
+  More tests
+  [gotcha]
+
 
 
 1.0a9 (2018-02-20)
