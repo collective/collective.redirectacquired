@@ -2,7 +2,7 @@ Changelog
 =========
 
 
-1.0a11 (unreleased)
+1.0a11 (2018-03-12)
 -------------------
 
 - Be defensive against circular redirects caused by broken Link objects or broken plone.folders
