@@ -5,7 +5,8 @@ Changelog
 1.0a11 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Be defensive against circular redirects caused by broken Link objects or broken plone.folders
+  [gotcha]
 
 
 1.0a10 (2018-02-26)
@@ -14,7 +15,6 @@ Changelog
 - Get rid of code made useless by refactoring.
   More tests
   [gotcha]
-
 
 
 1.0a9 (2018-02-20)

@@ -50,6 +50,14 @@ def redirect(event):
         actual_url = request.get('ACTUAL_URL')
         if query_string:
             actual_url = actual_url + '?' + query_string
+        if actual_url == canonical_url:
+            logger.warning("wants to redirect from '%s' to CANONICAL_URL '%s', do nothing as it would be circular redirect", actual_url, canonical_url)
+            logger.warning("might be due to a broken plone.folder -- object id is missing from container.objectIds()")
+            return
+        referer_url = request.get('HTTP_REFERER', '')
+        if referer_url == canonical_url:
+            logger.warning("wants to redirect to CANONICAL_URL '%s' but HTTP_REFERER is '%s'; do nothing as it would be circular redirect to referer", canonical_url, referer_url)
+            return
         logger.info("redirect from '%s' to CANONICAL_URL '%s'", actual_url, canonical_url)
         if might_redirect(request):
             dummy = None

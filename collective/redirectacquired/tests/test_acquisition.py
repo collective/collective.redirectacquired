@@ -246,6 +246,32 @@ class TestBadAcquisition(unittest.TestCase):
         self.portal['events'].manage_addProperty('layout', 'folder_listing', 'string')
         self.assertRedirectWhenTraverse('/plone/news/events', '/plone/events')
 
+    def test_do_nothing_when_redirect_to_itself(self):
+        self.portal.invokeFactory('Folder', 'news')
+        self.assertTrue('news' in self.portal.objectIds())
+        self.portal['news'].invokeFactory('Document', 'page')
+        self.assertTrue('page' in self.portal['news'].objectIds())
+        # simulate breakage of 'news' folder
+        self.portal['news'].getOrdering().notifyRemoved('page')
+        self.assertTrue('page' not in self.portal['news'].objectIds())
+        request = self.layer['request']
+        base_url = request['SERVER_URL']
+        request.set('MIGHT_REDIRECT', True)
+        request.traverse('/plone/news/page')
+        redirect(PubAfterTraversal(request))
+
+    def test_do_nothing_when_redirect_to_referrer(self):
+        self.portal.invokeFactory('Folder', 'news')
+        self.assertTrue('news' in self.portal.objectIds())
+        self.portal.invokeFactory('Link', 'link')
+        self.assertTrue('link' in self.portal.objectIds())
+        request = self.layer['request']
+        base_url = request['SERVER_URL']
+        request.set('MIGHT_REDIRECT', True)
+        request.set('HTTP_REFERER', 'http://nohost/plone/link')
+        request.traverse('/plone/news/link')
+        redirect(PubAfterTraversal(request))
+
 
 class TestFunctional(unittest.TestCase):
 
