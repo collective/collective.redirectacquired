@@ -5,6 +5,9 @@ Changelog
 1.0a12 (unreleased)
 -------------------
 
+- less noisy logging
+  [gotcha]
+
 - NotFound when acquiring a site
   [gotcha]
 

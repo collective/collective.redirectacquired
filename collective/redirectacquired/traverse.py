@@ -19,16 +19,16 @@ logger = logging.getLogger('redirect.acquired')
 
 def check_traversal_to_acquired_content(context, request, name, result):
     if is_suspect_acquisition(context, request, name, result):
-        logmsg = ("when traversing '%s', '%s' (%s) is acquired from "
-                "'%s' (%s), referred from %s")
-        logger.info(logmsg,
-                request.get('ACTUAL_URL'),
-                result.absolute_url(),
-                '/'.join(result.getPhysicalPath()),
-                context.absolute_url(),
-                '/'.join(context.getPhysicalPath()),
-                request.get('HTTP_REFERER', "none")
+        logmsg = ("when traversing '%s', (%s) is acquired from (%s)"
+             % (request.get('ACTUAL_URL'),
+            '/'.join(result.getPhysicalPath()),
+            '/'.join(context.getPhysicalPath())
             )
+        )
+        referer = request.get('HTTP_REFERER', "none")
+        if referer:
+            logmsg += ", referred from %s" % referer
+        logger.info(logmsg)
         if request['REQUEST_METHOD'] != 'GET':
             logger.info(
                 "no redirect because METHOD is '%s'",
