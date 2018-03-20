@@ -5,7 +5,8 @@ Changelog
 1.0a12 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- NotFound when acquiring a site
+  [gotcha]
 
 
 1.0a11 (2018-03-12)

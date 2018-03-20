@@ -5,8 +5,10 @@ from Acquisition import aq_base
 from ZPublisher.BaseRequest import DefaultPublishTraverse
 from ZPublisher.interfaces import IPubAfterTraversal
 from zExceptions import Redirect
+from zExceptions import NotFound
 
 from Products.CMFCore.interfaces import IContentish
+from Products.CMFCore.interfaces import ISiteRoot
 from plone.app.imaging.traverse import ImageTraverser
 from plone.app.caching.operations.utils import doNotCache
 
@@ -33,6 +35,8 @@ def check_traversal_to_acquired_content(context, request, name, result):
                 request.get('REQUEST_METHOD')
             )
             return
+        if ISiteRoot.providedBy(result):
+            raise NotFound
         canonical_url = get_canonical_url(request, result.absolute_url())
         # store CANONICAL_URL in order to be able to redirect later in traversal
         request.set('CANONICAL_URL', canonical_url)
@@ -67,7 +71,8 @@ def redirect(event):
 
 def is_suspect_acquisition(context, request, name, result):
     # both objects traversed should be contentish
-    if not IContentish.providedBy(result) or not IContentish.providedBy(context):
+    if ((not ISiteRoot.providedBy(result) and not IContentish.providedBy(result)) or
+            (not ISiteRoot.providedBy(context) and not IContentish.providedBy(context))):
         return False
     # allow for explicit acquisition
     elif IPublishableThroughAcquisition.providedBy(result):

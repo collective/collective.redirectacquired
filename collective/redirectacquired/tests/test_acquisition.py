@@ -3,6 +3,7 @@ import urllib2
 import base64
 import pkg_resources
 from zExceptions import Redirect
+from zExceptions import NotFound
 from zope.interface import alsoProvides
 from plone.testing.z2 import Browser
 from plone.app.testing import login
@@ -271,6 +272,19 @@ class TestBadAcquisition(unittest.TestCase):
         request.set('HTTP_REFERER', 'http://nohost/plone/link')
         request.traverse('/plone/news/link')
         redirect(PubAfterTraversal(request))
+
+    def test_not_found_when_acquiring_site(self):
+        from Products.CMFPlone.factory import addPloneSite
+        app = self.layer['app']
+        addPloneSite(app, 'other_plone',
+                title='other plone',
+                setup_content=False,
+                default_language='en',
+            )
+        request = self.layer['request']
+        base_url = request['SERVER_URL']
+        with self.assertRaises(NotFound) as cm:
+            request.traverse('/plone/other_plone')
 
 
 class TestFunctional(unittest.TestCase):
