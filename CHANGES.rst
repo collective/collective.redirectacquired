@@ -2,7 +2,7 @@ Changelog
 =========
 
 
-1.0a12 (unreleased)
+1.0a12 (2018-03-20)
 -------------------
 
 - less noisy logging
