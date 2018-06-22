@@ -36,7 +36,7 @@ def check_traversal_to_acquired_content(context, request, name, result):
             )
             return
         if ISiteRoot.providedBy(result):
-            raise NotFound
+            request.set('IS_SITE_ACQUIRED', True)
         canonical_url = get_canonical_url(request, result.absolute_url())
         # store CANONICAL_URL in order to be able to redirect later in traversal
         request.set('CANONICAL_URL', canonical_url)
@@ -64,6 +64,8 @@ def redirect(event):
             return
         logger.info("redirect from '%s' to CANONICAL_URL '%s'", actual_url, canonical_url)
         if might_redirect(request):
+	    if request.get('IS_SITE_ACQUIRED', False):
+		raise NotFound
             dummy = None
             doNotCache(dummy, request, request.response)
             raise MovedPermanently(canonical_url)

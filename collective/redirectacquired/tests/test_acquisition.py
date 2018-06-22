@@ -283,8 +283,12 @@ class TestBadAcquisition(unittest.TestCase):
             )
         request = self.layer['request']
         base_url = request['SERVER_URL']
+        request.traverse('/plone/other_plone')
+        redirect(PubAfterTraversal(request))
+        # raise only if MIGHT_REDIRECT
+        request.set('MIGHT_REDIRECT', True)
         with self.assertRaises(NotFound) as cm:
-            request.traverse('/plone/other_plone')
+            redirect(PubAfterTraversal(request))
 
 
 class TestFunctional(unittest.TestCase):

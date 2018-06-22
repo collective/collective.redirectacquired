@@ -5,7 +5,8 @@ Changelog
 1.0a13 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- NotFound when acquiring site only raised when redirect is activated in zope.conf
+  [gotcha]
 
 
 1.0a12 (2018-03-20)
