@@ -186,7 +186,7 @@ setuptools==40.0.0
 six==1.11.0
 tempstorage==4.0.1
 transaction==2.2.1
-unittest2==0.5.1
+unittest2==1.1.0
 wicked==1.1.12
 z3c.autoinclude==0.3.5
 z3c.caching==2.0a1
