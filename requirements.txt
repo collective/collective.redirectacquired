@@ -82,7 +82,7 @@ feedparser==5.2.1
 five.customerize==1.1
 five.formlib==1.0.4
 five.globalrequest==99.1
-five.localsitemanager==2.0.5
+five.localsitemanager==3.1
 future==0.13.1
 initgroups==2.13.0
 lxml==2.3.6
