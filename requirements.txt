@@ -248,7 +248,7 @@ zope.sendmail==4.1.0
 zope.sequencesort==4.0.1
 zope.site==4.1.0
 zope.size==4.2.0
-zope.structuredtext==3.5.1
+zope.structuredtext==4.2.0
 zope.tal==3.5.2
 zope.tales==3.5.3
 zope.testbrowser==3.11.1
