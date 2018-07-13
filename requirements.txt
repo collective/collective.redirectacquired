@@ -61,7 +61,7 @@ Products.statusmessages==5.0.3
 Products.validation==2.1
 Record==3.4
 RestrictedPython==3.6.0
-Unidecode==0.4.1
+Unidecode==1.0.22
 ZConfig==2.9.3
 ZODB3==3.10.7
 ZServer==3.0
