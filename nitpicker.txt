@@ -204,7 +204,7 @@ zope.annotation==3.5.0
 zope.app.content==3.5.1
 zope.app.file==3.6.1
 zope.app.form==4.0.2
-zope.app.locales==3.6.2
+zope.app.locales==4.0.1
 zope.app.publication==3.12.0
 zope.authentication==3.7.1
 zope.broken==3.6.0
