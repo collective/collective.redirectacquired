@@ -24,7 +24,7 @@ Products.CMFEditions==2.2.23
 Products.CMFFormController==3.0.8
 Products.CMFPlacefulWorkflow==1.5.15
 Products.CMFPlone==4.3.15
-Products.CMFQuickInstallerTool==3.0.15
+Products.CMFQuickInstallerTool==3.0.16
 Products.CMFTestCase==0.9.12
 Products.CMFUid==2.2.1
 Products.DCWorkflow==2.2.5
