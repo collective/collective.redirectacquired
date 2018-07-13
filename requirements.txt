@@ -228,7 +228,7 @@ zope.dublincore==4.2.0
 zope.error==4.4.0
 zope.event==4.3.0
 zope.exceptions==4.2.0
-zope.filerepresentation==3.6.1
+zope.filerepresentation==4.2.0
 zope.formlib==4.3.0
 zope.globalrequest==1.2
 zope.i18n==3.7.4
