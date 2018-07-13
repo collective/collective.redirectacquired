@@ -88,7 +88,7 @@ initgroups==2.13.0
 lxml==2.3.6
 mailinglogger==3.7.0
 mechanize==0.2.5
-mr.developer==1.37
+mr.developer==1.38
 nt-svcutils==2.13.0
 plone.alterego==1.1.1
 plone.app.blob==1.5.19
