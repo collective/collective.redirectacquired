@@ -255,4 +255,4 @@ zope.testbrowser==3.11.1
 zope.testing==3.9.7
 zope.testrunner==4.4.4
 zope.traversing==3.13.2
-zope.viewlet==3.7.2
+zope.viewlet==4.1.0
