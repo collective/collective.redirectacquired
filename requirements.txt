@@ -180,7 +180,7 @@ repoze.xmliter==0.6
 robotframework==3.0.4
 robotframework-selenium2library==3.0.0
 robotsuite==2.0.0
-roman==1.4.0
+roman==3.0
 selenium==2.53.5
 setuptools==26.1.1
 six==1.10.0
