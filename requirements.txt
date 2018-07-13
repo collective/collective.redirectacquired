@@ -162,7 +162,7 @@ plone.scale==3.0.1
 plone.schemaeditor==2.0.19
 plone.session==3.7.0
 plone.stringinterp==1.2.1
-plone.subrequest==1.8.1
+plone.subrequest==1.8.5
 plone.supermodel==1.2.7
 plone.synchronize==1.0.2
 plone.testing==4.1.2
