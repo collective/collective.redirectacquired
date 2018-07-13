@@ -231,7 +231,7 @@ zope.exceptions==4.2.0
 zope.filerepresentation==4.2.0
 zope.formlib==4.4
 zope.globalrequest==1.4
-zope.i18n==3.7.4
+zope.i18n==4.3.1
 zope.i18nmessageid==3.5.3
 zope.interface==3.6.7
 zope.lifecycleevent==3.6.2
