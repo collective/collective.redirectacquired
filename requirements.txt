@@ -242,7 +242,7 @@ zope.proxy==4.3.0
 zope.ptresource==4.1.0
 zope.publisher==4.3.2
 zope.ramcache==2.2.0
-zope.schema==4.2.2
+zope.schema==4.5.0
 zope.security==3.7.4
 zope.sendmail==3.7.5
 zope.sequencesort==3.4.0
