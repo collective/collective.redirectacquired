@@ -185,7 +185,7 @@ selenium==3.13.0
 setuptools==40.0.0
 six==1.11.0
 tempstorage==4.0.1
-transaction==1.1.1
+transaction==2.2.1
 unittest2==0.5.1
 wicked==1.1.12
 z3c.autoinclude==0.3.5
