@@ -125,7 +125,7 @@ plone.app.theming==2.0.4
 plone.app.upgrade==2.0.15
 plone.app.users==2.4.3
 plone.app.uuid==1.2
-plone.app.viewletmanager==2.0.10
+plone.app.viewletmanager==2.0.12
 plone.app.vocabularies==2.1.24
 plone.app.workflow==2.1.9
 plone.app.z3cform==0.7.7
