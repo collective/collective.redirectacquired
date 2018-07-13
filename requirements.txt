@@ -224,7 +224,7 @@ zope.datetime==4.2.0
 zope.deferredimport==4.2.1
 zope.deprecation==4.3.0
 zope.dottedname==4.2
-zope.dublincore==3.7.0
+zope.dublincore==4.2.0
 zope.error==3.7.4
 zope.event==3.5.2
 zope.exceptions==3.6.2
