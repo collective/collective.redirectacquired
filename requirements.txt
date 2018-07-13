@@ -149,7 +149,7 @@ plone.memoize==1.2.2
 plone.namedfile==4.2.5
 plone.openid==2.0.4
 plone.outputfilters==3.0.5
-plone.portlet.collection==2.1.10
+plone.portlet.collection==3.3.0
 plone.portlet.static==2.0.4
 plone.portlets==2.3
 plone.protect==2.0.3
