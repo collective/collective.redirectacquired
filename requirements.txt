@@ -203,7 +203,7 @@ zdaemon==4.2.0
 zope.annotation==4.6.0
 zope.app.content==4.0.0
 zope.app.file==4.0.0
-zope.app.form==4.0.2
+zope.app.form==5.0.0
 zope.app.locales==3.6.2
 zope.app.publication==3.12.0
 zope.authentication==3.7.1
