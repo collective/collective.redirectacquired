@@ -182,7 +182,7 @@ robotframework-selenium2library==3.0.0
 robotsuite==2.0.0
 roman==3.0
 selenium==3.13.0
-setuptools==26.1.1
+setuptools==40.0.0
 six==1.10.0
 tempstorage==2.12.2
 transaction==1.1.1
