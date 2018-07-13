@@ -244,7 +244,7 @@ zope.publisher==4.3.2
 zope.ramcache==2.2.0
 zope.schema==4.5.0
 zope.security==4.2.2
-zope.sendmail==3.7.5
+zope.sendmail==4.1.0
 zope.sequencesort==3.4.0
 zope.site==3.9.2
 zope.size==3.4.1
