@@ -21,7 +21,7 @@ Products.CMFDefault==2.2.4
 Products.CMFDiffTool==3.2.0
 Products.CMFDynamicViewFTI==5.0.0
 Products.CMFEditions==3.2.1
-Products.CMFFormController==3.0.8
+Products.CMFFormController==3.1.5
 Products.CMFPlacefulWorkflow==1.5.15
 Products.CMFPlone==4.3.15
 Products.CMFQuickInstallerTool==3.0.15
