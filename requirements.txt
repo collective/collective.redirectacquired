@@ -52,7 +52,7 @@ Products.Sessions==4.1
 Products.StandardCacheManagers==4.0.1
 Products.TemporaryFolder==5.1
 Products.TinyMCE==1.4.3
-Products.ZCTextIndex==2.13.5
+Products.ZCTextIndex==4.0.2
 Products.ZCatalog==2.13.27
 Products.ZSQLMethods==2.13.5
 Products.ZopeVersionControl==1.1.3
