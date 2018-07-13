@@ -213,7 +213,7 @@ zope.browsermenu==4.3.0
 zope.browserpage==4.2.0
 zope.browserresource==4.2.1
 zope.cachedescriptors==4.3.1
-zope.component==3.9.5
+zope.component==4.4.1
 zope.componentvocabulary==1.0.1
 zope.configuration==3.7.4
 zope.container==3.11.2
