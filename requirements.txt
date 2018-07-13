@@ -184,7 +184,7 @@ roman==3.0
 selenium==3.13.0
 setuptools==40.0.0
 six==1.11.0
-tempstorage==2.12.2
+tempstorage==4.0.1
 transaction==1.1.1
 unittest2==0.5.1
 wicked==1.1.12
