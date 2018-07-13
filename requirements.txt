@@ -202,7 +202,7 @@ zc.recipe.testrunner==2.0.0
 zdaemon==4.2.0
 zope.annotation==4.6.0
 zope.app.content==4.0.0
-zope.app.file==3.6.1
+zope.app.file==4.0.0
 zope.app.form==4.0.2
 zope.app.locales==3.6.2
 zope.app.publication==3.12.0
