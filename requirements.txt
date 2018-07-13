@@ -34,7 +34,7 @@ Products.ExternalMethod==4.0
 Products.GenericSetup==1.10.0
 Products.MIMETools==2.13.0
 Products.MailHost==4.1
-Products.Marshall==2.1.4
+Products.Marshall==2.3
 Products.MimetypesRegistry==2.0.10
 Products.OFSP==2.13.2
 Products.PasswordResetTool==2.0.19
