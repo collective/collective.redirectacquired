@@ -171,7 +171,7 @@ plone.transformchain==2.0.0
 plone.uuid==1.0.5
 plone.z3cform==0.9.1
 plonetheme.classic==1.4
-plonetheme.sunburst==1.4.7
+plonetheme.sunburst==1.5.4
 python-dateutil==1.5
 python-gettext==1.0
 python-openid==2.2.5
