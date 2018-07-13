@@ -193,7 +193,7 @@ z3c.caching==2.0
 z3c.form==4.0
 z3c.formwidget.query==0.16
 z3c.zcmlhook==1.0b1
-zExceptions==2.13.0
+zExceptions==4.0
 zLOG==2.11.2
 zc.buildout==1.7.1
 zc.lockfile==1.0.2
