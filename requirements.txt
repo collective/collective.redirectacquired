@@ -189,7 +189,7 @@ transaction==2.2.1
 unittest2==1.1.0
 wicked==1.1.12
 z3c.autoinclude==0.3.7
-z3c.caching==2.0a1
+z3c.caching==2.0
 z3c.form==3.2.11+imio
 z3c.formwidget.query==0.13
 z3c.zcmlhook==1.0b1
