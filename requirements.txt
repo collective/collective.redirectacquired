@@ -227,7 +227,7 @@ zope.dottedname==4.2
 zope.dublincore==4.2.0
 zope.error==4.4.0
 zope.event==4.3.0
-zope.exceptions==3.6.2
+zope.exceptions==4.2.0
 zope.filerepresentation==3.6.1
 zope.formlib==4.3.0
 zope.globalrequest==1.2
