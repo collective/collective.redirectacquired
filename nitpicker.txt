@@ -235,7 +235,7 @@ zope.i18n==3.7.4
 zope.i18nmessageid==3.5.3
 zope.interface==3.6.7
 zope.lifecycleevent==3.6.2
-zope.location==3.9.1
+zope.location==4.1.0
 zope.pagetemplate==3.6.3
 zope.processlifetime==1.0
 zope.proxy==3.6.1
