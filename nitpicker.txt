@@ -233,7 +233,7 @@ zope.formlib==4.3.0
 zope.globalrequest==1.2
 zope.i18n==3.7.4
 zope.i18nmessageid==3.5.3
-zope.interface==3.6.7
+zope.interface==4.5.0
 zope.lifecycleevent==3.6.2
 zope.location==3.9.1
 zope.pagetemplate==3.6.3
