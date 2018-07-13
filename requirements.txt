@@ -211,7 +211,7 @@ zope.broken==3.6.0
 zope.browser==2.2.0
 zope.browsermenu==4.3.0
 zope.browserpage==4.2.0
-zope.browserresource==3.10.3
+zope.browserresource==4.2.1
 zope.cachedescriptors==3.5.1
 zope.component==3.9.5
 zope.componentvocabulary==1.0.1
