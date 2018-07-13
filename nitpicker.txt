@@ -1,6 +1,6 @@
 AccessControl==3.0.11
 Acquisition==2.13.11
-Babel==2.5.3
+Babel==2.6.0
 DateTime==3.0.3
 DocumentTemplate==2.13.3
 ExtensionClass==2.13.2
