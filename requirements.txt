@@ -39,7 +39,7 @@ Products.MimetypesRegistry==2.1.3
 Products.OFSP==4.0.1
 Products.PasswordResetTool==2.2.4
 Products.PlacelessTranslationService==2.0.7
-Products.PloneLanguageTool==3.2.8
+Products.PloneLanguageTool==3.2.9
 Products.PlonePAS==5.0.14
 Products.PloneTestCase==0.9.18
 Products.PluggableAuthService==1.11.0
