@@ -63,7 +63,7 @@ Record==3.4
 RestrictedPython==3.6.0
 Unidecode==1.0.22
 ZConfig==3.2.0
-ZODB3==3.10.7
+ZODB3==3.11.0
 ZServer==3.0
 Zope2==2.13.26
 ZopeUndo==2.12.0
