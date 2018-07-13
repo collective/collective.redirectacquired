@@ -86,7 +86,7 @@ five.localsitemanager==2.0.5
 future==0.13.1
 initgroups==2.13.0
 lxml==2.3.6
-mailinglogger==3.7.0
+mailinglogger==5.0.0
 mechanize==0.2.5
 mr.developer==1.37
 nt-svcutils==2.13.0
