@@ -206,7 +206,7 @@ zope.app.file==3.6.1
 zope.app.form==4.0.2
 zope.app.locales==3.6.2
 zope.app.publication==3.12.0
-zope.authentication==3.7.1
+zope.authentication==4.4.0
 zope.broken==3.6.0
 zope.browser==1.3
 zope.browsermenu==3.9.1
