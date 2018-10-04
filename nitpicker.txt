@@ -230,7 +230,7 @@ zope.event==3.5.2
 zope.exceptions==3.6.2
 zope.filerepresentation==3.6.1
 zope.formlib==4.3.0
-zope.globalrequest==1.2
+zope.globalrequest==1.5
 zope.i18n==3.7.4
 zope.i18nmessageid==3.5.3
 zope.interface==3.6.7
