@@ -3,7 +3,7 @@ Acquisition==2.13.11
 Babel==2.5.3
 DateTime==3.0.3
 DocumentTemplate==2.13.3
-ExtensionClass==2.13.2
+ExtensionClass==4.4
 Markdown==2.0.3
 Missing==2.13.1
 MultiMapping==2.13.0
