@@ -5,7 +5,7 @@ DateTime==3.0.3
 DocumentTemplate==2.13.3
 ExtensionClass==2.13.2
 Markdown==2.0.3
-Missing==2.13.1
+Missing==4.1
 MultiMapping==2.13.0
 Persistence==2.13.2
 Pillow==3.3.0
