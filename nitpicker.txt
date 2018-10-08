@@ -46,7 +46,7 @@ Products.PluggableAuthService==1.11.0
 Products.PluginRegistry==1.4
 Products.PortalTransforms==2.1.12
 Products.PythonScripts==2.13.2
-Products.ResourceRegistries==2.2.13
+Products.ResourceRegistries==3.0.7
 Products.SecureMailHost==1.1.2
 Products.Sessions==3.0
 Products.StandardCacheManagers==2.13.1
