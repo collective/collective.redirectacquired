@@ -44,7 +44,7 @@ Products.PlonePAS==5.0.14
 Products.PloneTestCase==0.9.18
 Products.PluggableAuthService==1.11.0
 Products.PluginRegistry==1.4
-Products.PortalTransforms==2.1.12
+Products.PortalTransforms==3.1.5
 Products.PythonScripts==2.13.2
 Products.ResourceRegistries==2.2.13
 Products.SecureMailHost==1.1.2
