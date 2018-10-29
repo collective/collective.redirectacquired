@@ -175,7 +175,7 @@ plonetheme.sunburst==1.4.7
 python-dateutil==1.5
 python-gettext==1.0
 python-openid==2.2.5
-pytz==2013b0
+pytz==2018.7
 repoze.xmliter==0.6
 robotframework==3.0
 robotframework-selenium2library==1.7.4
