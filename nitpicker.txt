@@ -91,7 +91,7 @@ mechanize==0.2.5
 mr.developer==1.37
 nt-svcutils==2.13.0
 plone.alterego==1.1.1
-plone.app.blob==1.5.19
+plone.app.blob==1.8.0
 plone.app.caching==1.1.12
 plone.app.collection==1.0.15
 plone.app.content==2.1.7
