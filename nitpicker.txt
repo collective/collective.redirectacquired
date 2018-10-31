@@ -56,7 +56,7 @@ Products.ZCTextIndex==2.13.5
 Products.ZCatalog==2.13.27
 Products.ZSQLMethods==2.13.5
 Products.ZopeVersionControl==1.1.3
-Products.contentmigration==2.1.16
+Products.contentmigration==2.2.0
 Products.statusmessages==4.1.2
 Products.validation==2.0.2
 Record==2.13.0
