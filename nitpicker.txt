@@ -140,7 +140,7 @@ plone.dexterity==2.2.8
 plone.fieldsets==2.0.3
 plone.folder==1.0.9
 plone.formwidget.namedfile==1.0.15
-plone.i18n==2.0.11
+plone.i18n==4.0.1
 plone.indexer==1.0.4
 plone.intelligenttext==2.1.0
 plone.keyring==3.0.1
