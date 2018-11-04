@@ -119,7 +119,7 @@ plone.app.redirector==1.2.2
 plone.app.registry==1.2.5
 plone.app.robotframework==1.1.1
 plone.app.search==1.1.11
-plone.app.testing==4.2.6
+plone.app.testing==6.1.0
 plone.app.textfield==1.2.9
 plone.app.theming==1.1.8
 plone.app.upgrade==1.4.2
