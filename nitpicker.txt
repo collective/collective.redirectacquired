@@ -154,7 +154,7 @@ plone.portlet.static==2.0.4
 plone.portlets==2.3
 plone.protect==2.0.3
 plone.recipe.zope2instance==4.3
-plone.registry==1.0.5
+plone.registry==1.1.5
 plone.resource==1.2.1
 plone.resourceeditor==1.0
 plone.rfc822==1.1.3
