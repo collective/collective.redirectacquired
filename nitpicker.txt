@@ -85,7 +85,7 @@ five.globalrequest==1.0
 five.localsitemanager==2.0.5
 future==0.13.1
 initgroups==2.13.0
-lxml==2.3.6
+lxml==4.3.2
 mailinglogger==3.7.0
 mechanize==0.2.5
 mr.developer==1.37
