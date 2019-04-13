@@ -64,8 +64,8 @@ def redirect(event):
             return
         logger.info("redirect from '%s' to CANONICAL_URL '%s'", actual_url, canonical_url)
         if might_redirect(request):
-	    if request.get('IS_SITE_ACQUIRED', False):
-		raise NotFound
+            if request.get('IS_SITE_ACQUIRED', False):
+                raise NotFound
             dummy = None
             doNotCache(dummy, request, request.response)
             raise MovedPermanently(canonical_url)
