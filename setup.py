@@ -11,7 +11,12 @@ setup(
     long_description=description,
     classifiers=[
         "Framework :: Plone",
+        "Framework :: Plone :: 4.3",
+        "Framework :: Plone :: 5.2",
         "Programming Language :: Python",
+        "Programming Language :: Python :: 2.7",
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
     ],
     keywords='traversal acquisition',
     author='Godefroid Chapelle',
