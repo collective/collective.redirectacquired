@@ -1,5 +1,4 @@
-from setuptools import setup
-from setuptools import find_packages
+from setuptools import find_packages, setup
 
 version = '1.0a13.dev0'
 description = open("README.rst").read() + "\n" + open("CHANGES.rst").read()
@@ -10,7 +9,9 @@ setup(
     description="Redirect when traversing to acquired content outside the current path.",  # noqa
     long_description=description,
     classifiers=[
+        "Environment :: Web Environment",
         "Framework :: Plone",
+        "Framework :: Plone :: Addon",
         "Framework :: Plone :: 4.3",
         "Framework :: Plone :: 5.2",
         "Programming Language :: Python",

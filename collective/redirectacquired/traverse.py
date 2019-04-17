@@ -1,16 +1,14 @@
 import logging
-from zope.component import adapter
-from App.config import getConfiguration
+
 from Acquisition import aq_base
+from App.config import getConfiguration
+from plone.app.caching.operations.utils import doNotCache
+from plone.app.imaging.traverse import ImageTraverser
+from Products.CMFCore.interfaces import IContentish, ISiteRoot
+from zExceptions import NotFound, Redirect
+from zope.component import adapter
 from ZPublisher.BaseRequest import DefaultPublishTraverse
 from ZPublisher.interfaces import IPubAfterTraversal
-from zExceptions import Redirect
-from zExceptions import NotFound
-
-from Products.CMFCore.interfaces import IContentish
-from Products.CMFCore.interfaces import ISiteRoot
-from plone.app.imaging.traverse import ImageTraverser
-from plone.app.caching.operations.utils import doNotCache
 
 from .interfaces import IPublishableThroughAcquisition
 

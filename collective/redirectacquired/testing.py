@@ -1,5 +1,4 @@
-from plone.app.testing.layers import FunctionalTesting
-from plone.app.testing.layers import IntegrationTesting
+from plone.app.testing.layers import FunctionalTesting, IntegrationTesting
 from Products.CMFPlone.testing import ProductsCMFPloneLayer
 
 

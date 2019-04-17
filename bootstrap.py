@@ -20,10 +20,14 @@ use the -c option to specify an alternate configuration file.
 
 import os
 import shutil
+import subprocess
 import sys
 import tempfile
-
 from optparse import OptionParser
+
+import pkg_resources
+import setuptools
+import zc.buildout.buildout
 
 tmpeggs = tempfile.mkdtemp()
 
@@ -90,8 +94,6 @@ if not options.allow_site_packages:
 
 setup_args = dict(to_dir=tmpeggs, download_delay=0)
 ez['use_setuptools'](**setup_args)
-import setuptools
-import pkg_resources
 
 # This does not (always?) update the default working set.  We will
 # do it.
@@ -155,7 +157,6 @@ if version:
     requirement = '=='.join((requirement, version))
 cmd.append(requirement)
 
-import subprocess
 if subprocess.call(cmd, env=dict(os.environ, PYTHONPATH=setuptools_path)) != 0:
     raise Exception(
         "Failed to execute command:\n%s" % repr(cmd)[1:-1])
@@ -165,7 +166,6 @@ if subprocess.call(cmd, env=dict(os.environ, PYTHONPATH=setuptools_path)) != 0:
 
 ws.add_entry(tmpeggs)
 ws.require(requirement)
-import zc.buildout.buildout
 
 if not [a for a in args if '=' not in a]:
     args.append('bootstrap')

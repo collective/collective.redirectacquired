@@ -1,19 +1,20 @@
+import base64
 import unittest
 import urllib2
-import base64
+
 import pkg_resources
-from zExceptions import Redirect
-from zExceptions import NotFound
-from zope.interface import alsoProvides
-from plone.testing.z2 import Browser
-from plone.app.testing import login
-from plone.app.testing import TEST_USER_NAME, TEST_USER_PASSWORD
-from plone.app.testing import TEST_USER_ID
-from ZPublisher.pubevents import PubAfterTraversal
+
+from collective.redirectacquired.interfaces import \
+    IPublishableThroughAcquisition
+from collective.redirectacquired.testing import (BASE_FUNCTIONAL_TESTING,
+                                                 BASE_INTEGRATION_TESTING)
 from collective.redirectacquired.traverse import redirect
-from collective.redirectacquired.testing import BASE_INTEGRATION_TESTING
-from collective.redirectacquired.testing import BASE_FUNCTIONAL_TESTING
-from collective.redirectacquired.interfaces import IPublishableThroughAcquisition
+from plone.app.testing import (TEST_USER_ID, TEST_USER_NAME,
+                               TEST_USER_PASSWORD, login)
+from plone.testing.z2 import Browser
+from zExceptions import NotFound, Redirect
+from zope.interface import alsoProvides
+from ZPublisher.pubevents import PubAfterTraversal
 
 
 def login_as_test_user(request):
