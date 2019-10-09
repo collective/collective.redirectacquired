@@ -114,7 +114,7 @@ plone.app.linkintegrity==1.5.10
 plone.app.locales==4.3.13
 plone.app.openid==2.0.4
 plone.app.portlets==2.5.6
-plone.app.querystring==1.2.11
+plone.app.querystring==1.4.12
 plone.app.redirector==1.2.2
 plone.app.registry==1.2.5
 plone.app.robotframework==1.1.1
