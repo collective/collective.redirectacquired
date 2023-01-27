@@ -1,5 +1,5 @@
-from zope.interface import Interface
 from plone.app.imaging.interfaces import IBaseObject as IImagingBaseObject
+from zope.interface import Interface
 
 
 class IPublishableThroughAcquisition(Interface):
