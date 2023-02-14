@@ -12,6 +12,7 @@ setup(
     long_description=description,
     classifiers=[
         "Framework :: Plone",
+        "Framework :: Plone :: Addon",
         "Programming Language :: Python",
     ],
     keywords="traversal acquisition",
