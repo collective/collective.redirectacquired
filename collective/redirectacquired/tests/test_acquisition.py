@@ -1,4 +1,5 @@
-from collective.redirectacquired.interfaces import IPublishableThroughAcquisition
+from collective.redirectacquired.interfaces import (
+        IPublishableThroughAcquisition)
 from collective.redirectacquired.testing import BASE_FUNCTIONAL_TESTING
 from collective.redirectacquired.testing import BASE_INTEGRATION_TESTING
 from collective.redirectacquired.traverse import redirect
@@ -53,7 +54,8 @@ class TestBadAcquisition(unittest.TestCase):
         self.assertTrue("a_page" in self.portal.objectIds())
         self.portal.invokeFactory("Folder", "a_folder")
         self.assertTrue("a_folder" in self.portal.objectIds())
-        self.assertRedirectWhenTraverse("/plone/a_folder/a_page", "/plone/a_page")
+        self.assertRedirectWhenTraverse(
+            "/plone/a_folder/a_page", "/plone/a_page")
 
     def test_no_content_acquired(self):
         self.portal.invokeFactory("Document", "a_page")
@@ -104,7 +106,8 @@ class TestBadAcquisition(unittest.TestCase):
         request = self.layer["request"]
         request.set("MIGHT_REDIRECT", True)
         request.traverse("/plone/a_folder/a_page")
-        self.assertRedirectWhenTraverse("/plone/a_page/a_folder", "/plone/a_folder")
+        self.assertRedirectWhenTraverse(
+            "/plone/a_page/a_folder", "/plone/a_folder")
 
     def test_content_acquired_log_but_no_redirect(self):
         self.portal.invokeFactory("Document", "a_page")
@@ -160,7 +163,8 @@ class TestBadAcquisition(unittest.TestCase):
         self.assertTrue("a_image" in self.portal.objectIds())
         self.portal.invokeFactory("Folder", "a_folder")
         self.assertTrue("a_folder" in self.portal.objectIds())
-        self.assertRedirectWhenTraverse("/plone/a_folder/a_image", "/plone/a_image")
+        self.assertRedirectWhenTraverse(
+            "/plone/a_folder/a_image", "/plone/a_image")
 
     def test_image_view(self):
         self.portal.invokeFactory("Image", "a_image")
@@ -177,7 +181,8 @@ class TestBadAcquisition(unittest.TestCase):
 
         resource_package = "collective.redirectacquired.tests"
         resource_path = "/".join(("resources", "sunset.png"))
-        sunset_png = pkg_resources.resource_stream(resource_package, resource_path)
+        sunset_png = pkg_resources.resource_stream(
+                resource_package, resource_path)
         data = sunset_png.read()
         self.portal["a_image"].image = NamedImage(
                 data, "image/png", "sunset.png")
@@ -201,7 +206,8 @@ class TestBadAcquisition(unittest.TestCase):
 
         resource_package = "collective.redirectacquired.tests"
         resource_path = "/".join(("resources", "sunset.png"))
-        sunset_png = pkg_resources.resource_stream(resource_package, resource_path)
+        sunset_png = pkg_resources.resource_stream(
+                resource_package, resource_path)
         data = sunset_png.read()
         folder["a_image"].image = NamedImage(
                 data, "image/png", "sunset.png")
@@ -217,7 +223,8 @@ class TestBadAcquisition(unittest.TestCase):
         self.assertTrue("news" in self.portal.objectIds())
         self.portal["news"].invokeFactory("Document", "a_page")
         self.assertTrue("a_page" in self.portal["news"].objectIds())
-        self.portal["news"].manage_addProperty("default_page", "a_page", "string")
+        self.portal["news"].manage_addProperty(
+            "default_page", "a_page", "string")
         self.portal.invokeFactory("Folder", "events")
         self.assertTrue("events" in self.portal.objectIds())
         self.assertRedirectWhenTraverse("/plone/events/news", "/plone/news")
@@ -227,7 +234,8 @@ class TestBadAcquisition(unittest.TestCase):
         self.assertTrue("news" in self.portal.objectIds())
         self.portal["news"].invokeFactory("Document", "a_page")
         self.assertTrue("a_page" in self.portal["news"].objectIds())
-        self.portal["news"].manage_addProperty("default_page", "a_page", "string")
+        self.portal["news"].manage_addProperty(
+            "default_page", "a_page", "string")
         self.portal["news"]["a_page"].manage_addProperty(
             "layout", "document_view", "string"
         )
@@ -240,14 +248,16 @@ class TestBadAcquisition(unittest.TestCase):
         self.assertTrue("news" in self.portal.objectIds())
         self.portal.invokeFactory("Folder", "events")
         self.assertTrue("events" in self.portal.objectIds())
-        self.assertRedirectWhenTraverse("/plone/news/events/edit", "/plone/events/edit")
+        self.assertRedirectWhenTraverse(
+            "/plone/news/events/edit", "/plone/events/edit")
 
     def test_folder_layout(self):
         self.portal.invokeFactory("Folder", "news")
         self.assertTrue("news" in self.portal.objectIds())
         self.portal.invokeFactory("Folder", "events")
         self.assertTrue("events" in self.portal.objectIds())
-        self.portal["events"].manage_addProperty("layout", "folder_listing", "string")
+        self.portal["events"].manage_addProperty(
+            "layout", "folder_listing", "string")
         self.assertRedirectWhenTraverse("/plone/news/events", "/plone/events")
 
     def test_do_nothing_when_redirect_to_itself(self):
@@ -259,7 +269,6 @@ class TestBadAcquisition(unittest.TestCase):
         self.portal["news"].getOrdering().notifyRemoved("page")
         self.assertTrue("page" not in self.portal["news"].objectIds())
         request = self.layer["request"]
-        base_url = request["SERVER_URL"]
         request.set("MIGHT_REDIRECT", True)
         request.traverse("/plone/news/page")
         redirect(PubAfterTraversal(request))
@@ -270,7 +279,6 @@ class TestBadAcquisition(unittest.TestCase):
         self.portal.invokeFactory("Link", "link")
         self.assertTrue("link" in self.portal.objectIds())
         request = self.layer["request"]
-        base_url = request["SERVER_URL"]
         request.set("MIGHT_REDIRECT", True)
         request.set("HTTP_REFERER", "http://nohost/plone/link")
         request.traverse("/plone/news/link")
@@ -288,12 +296,11 @@ class TestBadAcquisition(unittest.TestCase):
             default_language="en",
         )
         request = self.layer["request"]
-        base_url = request["SERVER_URL"]
         request.traverse("/plone/other_plone")
         redirect(PubAfterTraversal(request))
         # raise only if MIGHT_REDIRECT
         request.set("MIGHT_REDIRECT", True)
-        with self.assertRaises(NotFound) as cm:
+        with self.assertRaises(NotFound):
             redirect(PubAfterTraversal(request))
 
 
@@ -350,9 +357,11 @@ class TestFunctional(unittest.TestCase):
                 TEST_USER_PASSWORD,
             ),
         )
-        url = self.app.absolute_url() + "/plone/dir1/dir3/dir2/page1?MIGHT_REDIRECT=1"
+        url = (self.app.absolute_url()
+               + "/plone/dir1/dir3/dir2/page1?MIGHT_REDIRECT=1")
         browser.open(url)
-        redir_url = self.app.absolute_url() + "/plone/dir1/dir2/page1?MIGHT_REDIRECT=1"
+        redir_url = (self.app.absolute_url()
+                     + "/plone/dir1/dir2/page1?MIGHT_REDIRECT=1")
         self.assertEqual(browser.url, redir_url)
 
     def test_moved_redirector(self):
@@ -386,13 +395,16 @@ class TestFunctional(unittest.TestCase):
                 TEST_USER_PASSWORD,
             ),
         )
-        url = self.app.absolute_url() + "/plone/dir1/dir2/page1?MIGHT_REDIRECT=1"
+        url = (self.app.absolute_url()
+               + "/plone/dir1/dir2/page1?MIGHT_REDIRECT=1")
         browser.open(url)
-        redir_url = self.app.absolute_url() + "/plone/dir1/dir3/page1?MIGHT_REDIRECT=1"
+        redir_url = (self.app.absolute_url()
+                     + "/plone/dir1/dir3/page1?MIGHT_REDIRECT=1")
         self.assertEqual(browser.url, redir_url)
 
     def test_virtual_hosting(self):
-        from Products.SiteAccess.VirtualHostMonster import manage_addVirtualHostMonster
+        from Products.SiteAccess.VirtualHostMonster import (
+            manage_addVirtualHostMonster)
         from Products.SiteAccess.VirtualHostMonster import VirtualHostMonster
 
         manage_addVirtualHostMonster(self.app)
@@ -415,7 +427,8 @@ class TestFunctional(unittest.TestCase):
         )
         url = (
             self.app.absolute_url()
-            + "/VirtualHostBase/http/www.buystuff.com:80/plone/a_page?MIGHT_REDIRECT=1"
+            + "/VirtualHostBase/http/www.buystuff.com:80"
+            + "/plone/a_page?MIGHT_REDIRECT=1"
         )
         browser.open(url)
         self.assertEqual(url, browser.url)
@@ -423,7 +436,8 @@ class TestFunctional(unittest.TestCase):
         browser.followRedirects = False
         url = (
             self.app.absolute_url()
-            + "/VirtualHostBase/http/www.buystuff.com:80/plone/a_folder/a_page?MIGHT_REDIRECT=1"
+            + "/VirtualHostBase/http/www.buystuff.com:80"
+            + "/plone/a_folder/a_page?MIGHT_REDIRECT=1"
         )
         browser.open(url)
         self.assertTrue(browser.headers.get('Status', '').startswith('301'))
@@ -432,7 +446,8 @@ class TestFunctional(unittest.TestCase):
         browser.handleErrors = False
         url = (
             self.app.absolute_url()
-            + "/VirtualHostBase/http/www.buystuff.com:80/plone/VirtualHostRoot/_vh_z/a_page?MIGHT_REDIRECT=1"
+            + "/VirtualHostBase/http/www.buystuff.com:80"
+            + "/plone/VirtualHostRoot/_vh_z/a_page?MIGHT_REDIRECT=1"
         )
         browser.open(url)
         self.assertEqual(url, browser.url)
