@@ -5,12 +5,9 @@ from Products.CMFPlone.testing import ProductsCMFPloneLayer
 
 class BaseLayer(ProductsCMFPloneLayer):
     def setUpZope(self, app, configurationContext):  # pylint: disable=W0613
-        import plone.app.imaging
-
-        self.loadZCML(package=plone.app.imaging, name="configure.zcml")
         import collective.redirectacquired
 
-        self.loadZCML(package=collective.redirectacquired, name="configure.zcml")
+        self.loadZCML(package=collective.redirectacquired, name="testing.zcml")
 
 
 BASE = BaseLayer()

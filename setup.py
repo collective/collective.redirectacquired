@@ -31,6 +31,7 @@ setup(
         "zExceptions",
         "zope.component",
         "zope.interface",
+        "plone.app.caching",
     ],
     extras_require={"test": ["Products.CMFPlone[test]"]},
     entry_points="""

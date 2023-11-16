@@ -1,0 +1,15 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    >
+
+    <include package="collective.redirectacquired" />
+
+    <browser:page
+        for="*"
+        name="my_view"
+        template="tests/resources/my_view.pt"
+        permission="zope.Public"
+        />
+
+</configure>

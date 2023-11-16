@@ -2,8 +2,7 @@ from collective.redirectacquired.interfaces import IPublishableThroughAcquisitio
 from collective.redirectacquired.testing import BASE_FUNCTIONAL_TESTING
 from collective.redirectacquired.testing import BASE_INTEGRATION_TESTING
 from collective.redirectacquired.traverse import redirect
-from plone.app.testing import login
-from plone.app.testing import TEST_USER_ID
+from plone.namedfile.file import NamedImage
 from plone.app.testing import TEST_USER_NAME
 from plone.app.testing import TEST_USER_PASSWORD
 from plone.testing.z2 import Browser
@@ -15,13 +14,12 @@ from ZPublisher.pubevents import PubAfterTraversal
 import base64
 import pkg_resources
 import unittest
-import urllib2
 
 
 def login_as_test_user(request):
-    request._auth = "basic " + base64.encodestring(
-        TEST_USER_NAME + ":" + TEST_USER_PASSWORD
-    )
+    as_string = TEST_USER_NAME + ":" + TEST_USER_PASSWORD
+    as_bytes = as_string.encode()
+    request._auth = (b"basic " + base64.b64encode(as_bytes)).decode()
 
 
 class TestBadAcquisition(unittest.TestCase):
@@ -30,6 +28,7 @@ class TestBadAcquisition(unittest.TestCase):
 
     def setUp(self):
         self.portal = self.layer["portal"]
+        login_as_test_user(self.layer["request"])
 
     def assertRedirectWhenTraverse(self, traverse_to, redirect_to, **kw):
         request = self.layer["request"]
@@ -46,7 +45,8 @@ class TestBadAcquisition(unittest.TestCase):
         self.assertTrue(
             request.response.headers["cache-control"].startswith("max-age=0")
         )
-        self.assertEqual(cm.exception.message, base_url + redirect_to)
+        self.assertEqual(
+            cm.exception.headers['Location'], base_url + redirect_to)
 
     def test_content_acquired(self):
         self.portal.invokeFactory("Document", "a_page")
@@ -131,12 +131,14 @@ class TestBadAcquisition(unittest.TestCase):
         self.assertTrue("a_page" in self.portal.objectIds())
         self.portal.invokeFactory("Folder", "a_folder")
         self.assertTrue("a_folder" in self.portal.objectIds())
-        login_as_test_user(self.layer["request"])
+        request = self.layer["request"]
+        request.set("MIGHT_REDIRECT", True)
+        request.traverse("/plone/a_page/my_view")
         self.assertRedirectWhenTraverse(
-            "/plone/a_folder/a_page/search", "/plone/a_page/search"
+             "/plone/a_folder/a_page/my_view", "/plone/a_page/my_view"
         )
         self.assertRedirectWhenTraverse(
-            "/plone/a_folder/a_page/@@search", "/plone/a_page/@@search"
+            "/plone/a_folder/a_page/@@my_view", "/plone/a_page/@@my_view"
         )
 
     def test_resolveuid(self):
@@ -169,21 +171,6 @@ class TestBadAcquisition(unittest.TestCase):
             "/plone/a_folder/a_image/view", "/plone/a_image/view"
         )
 
-    def test_image_scale(self):
-        self.portal.invokeFactory("Image", "a_image")
-        self.assertTrue("a_image" in self.portal.objectIds())
-
-        resource_package = "collective.redirectacquired.tests"
-        resource_path = "/".join(("resources", "sunset.png"))
-        sunset_png = pkg_resources.resource_stream(resource_package, resource_path)
-        self.portal["a_image"].setImage(sunset_png)
-
-        self.portal.invokeFactory("Folder", "a_folder")
-        self.assertTrue("a_folder" in self.portal.objectIds())
-        self.assertRedirectWhenTraverse(
-            "/plone/a_folder/a_image/image_mini", "/plone/a_image/image_mini"
-        )
-
     def test_image_images_view(self):
         self.portal.invokeFactory("Image", "a_image")
         self.assertTrue("a_image" in self.portal.objectIds())
@@ -191,7 +178,9 @@ class TestBadAcquisition(unittest.TestCase):
         resource_package = "collective.redirectacquired.tests"
         resource_path = "/".join(("resources", "sunset.png"))
         sunset_png = pkg_resources.resource_stream(resource_package, resource_path)
-        self.portal["a_image"].setImage(sunset_png)
+        data = sunset_png.read()
+        self.portal["a_image"].image = NamedImage(
+                data, "image/png", "sunset.png")
 
         self.portal.invokeFactory("Folder", "a_folder")
         self.assertTrue("a_folder" in self.portal.objectIds())
@@ -213,7 +202,10 @@ class TestBadAcquisition(unittest.TestCase):
         resource_package = "collective.redirectacquired.tests"
         resource_path = "/".join(("resources", "sunset.png"))
         sunset_png = pkg_resources.resource_stream(resource_package, resource_path)
-        folder["a_image"].setImage(sunset_png)
+        data = sunset_png.read()
+        folder["a_image"].image = NamedImage(
+                data, "image/png", "sunset.png")
+
         uid = folder["a_image"].UID()
         self.assertRedirectWhenTraverse(
             "/plone/a_page/a_folder/resolveuid/%s/@@images/image/mini" % uid,
@@ -331,10 +323,9 @@ class TestFunctional(unittest.TestCase):
             ),
         )
         url = self.app.absolute_url() + "/plone/a_folder/a_page?MIGHT_REDIRECT=1"
-        browser.mech_browser.set_handle_redirect(False)
-        with self.assertRaises(urllib2.HTTPError) as cm:
-            browser.open(url)
-        self.assertEqual(cm.exception.code, 301)
+        browser.followRedirects = False
+        browser.open(url)
+        self.assertTrue(browser.headers.get('Status', '').startswith('301'))
 
     def test_more_complex_acquisition(self):
         self.portal.invokeFactory("Folder", "dir1")
@@ -428,12 +419,16 @@ class TestFunctional(unittest.TestCase):
         )
         browser.open(url)
         self.assertEqual(url, browser.url)
+
+        browser.followRedirects = False
         url = (
             self.app.absolute_url()
             + "/VirtualHostBase/http/www.buystuff.com:80/plone/a_folder/a_page?MIGHT_REDIRECT=1"
         )
         browser.open(url)
-        self.assertNotEqual(url, browser.url)
+        self.assertTrue(browser.headers.get('Status', '').startswith('301'))
+
+        browser.followRedirects = True
         browser.handleErrors = False
         url = (
             self.app.absolute_url()

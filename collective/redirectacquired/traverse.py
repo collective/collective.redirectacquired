@@ -2,7 +2,6 @@ from .interfaces import IPublishableThroughAcquisition
 from Acquisition import aq_base
 from App.config import getConfiguration
 from plone.app.caching.operations.utils import doNotCache
-from plone.app.imaging.traverse import ImageTraverser
 from Products.CMFCore.interfaces import IContentish
 from Products.CMFCore.interfaces import ISiteRoot
 from zExceptions import NotFound
@@ -119,13 +118,6 @@ def get_canonical_url(request, base_url):
 
 
 class LogAcquiredPublishTraverse(DefaultPublishTraverse):
-    def publishTraverse(self, request, name):
-        result = super().publishTraverse(request, name)
-        check_traversal_to_acquired_content(self.context, request, name, result)
-        return result
-
-
-class LogAcquiredImageTraverser(ImageTraverser):
     def publishTraverse(self, request, name):
         result = super().publishTraverse(request, name)
         check_traversal_to_acquired_content(self.context, request, name, result)

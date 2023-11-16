@@ -7,18 +7,14 @@
       factory=".traverse.LogAcquiredPublishTraverse"
       />
 
-  <class class="Products.Archetypes.atapi.BaseObject">
-      <implements interface=".interfaces.IBaseObject" />
-  </class>
-
   <interface
       interface=".interfaces.IPublishableThroughAcquisition" />
 
   <adapter
       provides="zope.publisher.interfaces.IPublishTraverse"
-      for=".interfaces.IBaseObject
+      for="plone.dexterity.interfaces.IContentType
            zope.publisher.interfaces.browser.IBrowserRequest"
-      factory=".traverse.LogAcquiredImageTraverser"
+      factory=".traverse.LogAcquiredPublishTraverse"
       />
 
   <subscriber handler=".traverse.redirect" />
