@@ -4,7 +4,7 @@
       provides="zope.publisher.interfaces.IPublishTraverse"
       for="zope.interface.Interface
            zope.publisher.interfaces.browser.IBrowserRequest"
-      factory=".traverse.LogAcquiredPublishTraverse"
+      factory=".traverse.CheckAcquiredPublishTraverse"
       />
 
   <interface
@@ -12,9 +12,9 @@
 
   <adapter
       provides="zope.publisher.interfaces.IPublishTraverse"
-      for="plone.dexterity.interfaces.IContentType
+      for="plone.dexterity.interfaces.IDexterityContent
            zope.publisher.interfaces.browser.IBrowserRequest"
-      factory=".traverse.LogAcquiredPublishTraverse"
+      factory=".traverse.DexterityCheckAcquiredPublishTraverse"
       />
 
   <subscriber handler=".traverse.redirect" />

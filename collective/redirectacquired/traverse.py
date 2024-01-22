@@ -2,6 +2,7 @@ from .interfaces import IPublishableThroughAcquisition
 from Acquisition import aq_base
 from App.config import getConfiguration
 from plone.app.caching.operations.utils import doNotCache
+from plone.dexterity.browser.traversal import DexterityPublishTraverse
 from Products.CMFCore.interfaces import IContentish
 from Products.CMFCore.interfaces import ISiteRoot
 from zExceptions import NotFound
@@ -117,11 +118,20 @@ def get_canonical_url(request, base_url):
     return "/".join(names)
 
 
-class LogAcquiredPublishTraverse(DefaultPublishTraverse):
+class CheckAcquiredMixin:
     def publishTraverse(self, request, name):
         result = super().publishTraverse(request, name)
         check_traversal_to_acquired_content(self.context, request, name, result)
         return result
+
+
+class CheckAcquiredPublishTraverse(CheckAcquiredMixin, DefaultPublishTraverse):
+    pass
+
+
+class DexterityCheckAcquiredPublishTraverse(CheckAcquiredMixin,
+                                          DexterityPublishTraverse):
+    pass
 
 
 def getRedirectFromConfiguration():
