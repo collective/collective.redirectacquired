@@ -4,5 +4,6 @@ recursive-include collective *
 global-include *.mo
 global-exclude *pyc *~
 exclude buildout.cfg
+exclude requirements.txt
 prune parts
-exclude .DS_Store
+recursive-exclude * .DS_Store
