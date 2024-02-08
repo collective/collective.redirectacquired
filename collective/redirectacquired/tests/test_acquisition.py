@@ -13,8 +13,8 @@ from zope.interface import alsoProvides
 from ZPublisher.pubevents import PubAfterTraversal
 
 import base64
-import pkg_resources
 import unittest
+from pathlib import Path
 
 
 def login_as_test_user(request):
@@ -179,11 +179,17 @@ class TestBadAcquisition(unittest.TestCase):
         self.portal.invokeFactory("Image", "a_image")
         self.assertTrue("a_image" in self.portal.objectIds())
 
-        resource_package = "collective.redirectacquired.tests"
-        resource_path = "/".join(("resources", "sunset.png"))
-        sunset_png = pkg_resources.resource_stream(
-                resource_package, resource_path)
-        data = sunset_png.read()
+        try:
+            from importlib.resources import files
+            resource_package = "collective.redirectacquired.tests"
+            resource_path = Path("resources", "sunset.png")
+            data = files(resource_package).joinpath(resource_path).read_bytes()
+        except ImportError:
+            from importlib.resources import path
+            resource_package = "collective.redirectacquired.tests"
+            with path(resource_package, "resources") as resources:
+                resource_path = resources / "sunset.png"
+                data = resource_path.read_bytes()
         self.portal["a_image"].image = NamedImage(
                 data, "image/png", "sunset.png")
 
@@ -204,11 +210,18 @@ class TestBadAcquisition(unittest.TestCase):
         folder.invokeFactory("Image", "a_image")
         self.assertTrue("a_image" in folder.objectIds())
 
-        resource_package = "collective.redirectacquired.tests"
-        resource_path = "/".join(("resources", "sunset.png"))
-        sunset_png = pkg_resources.resource_stream(
-                resource_package, resource_path)
-        data = sunset_png.read()
+        try:
+            from importlib.resources import files
+            resource_package = "collective.redirectacquired.tests"
+            resource_path = Path("resources", "sunset.png")
+            data = files(resource_package).joinpath(resource_path).read_bytes()
+        except ImportError:
+            from importlib.resources import path
+            resource_package = "collective.redirectacquired.tests"
+            with path(resource_package, "resources") as resources:
+                resource_path = resources / "sunset.png"
+                data = resource_path.read_bytes()
+
         folder["a_image"].image = NamedImage(
                 data, "image/png", "sunset.png")
 
