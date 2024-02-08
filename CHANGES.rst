@@ -2,8 +2,8 @@ Changelog
 =========
 
 
-1.0a13 (unreleased)
--------------------
+2.0a1 (2024-02-08)
+------------------
 
 - Plone 6 support (Plone 4 support dropped)
   [gotcha]
