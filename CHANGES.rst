@@ -5,6 +5,9 @@ Changelog
 1.0a13 (unreleased)
 -------------------
 
+- Plone 6 support (Plone 4 support dropped)
+  [gotcha]
+
 - NotFound when acquiring site only raised when redirect is activated in zope.conf
   [gotcha]
 
