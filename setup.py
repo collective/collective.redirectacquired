@@ -12,6 +12,7 @@ setup(
     long_description=description,
     classifiers=[
         "Framework :: Plone",
+        "Framework :: Plone :: 6.0",
         "Programming Language :: Python",
     ],
     keywords="traversal acquisition",
@@ -33,6 +34,7 @@ setup(
         "zope.interface",
         "plone.app.caching",
     ],
+    python_requires='>=3.7',
     extras_require={"test": ["Products.CMFPlone[test]"]},
     entry_points="""
     [z3c.autoinclude.plugin]
